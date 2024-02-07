@@ -15,7 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Model)
             </th>
-             <th>
+            <th>
                 @Html.DisplayNameFor(model => model.Year)
             </th>
             <th>
@@ -43,41 +43,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gearbox)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fuel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Milage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-               <img style="width: 200px;" src="images/@Html.DisplayFor(modelItem => item.ImageName)"> 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MakeModel.MakeOfModel)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gearbox)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fuel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Milage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <img style="width: 200px;" src="images/@Html.DisplayFor(modelItem => item.ImageName)">
+                </td>
+                <td>
+                    @if (item.MakeModel != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.MakeModel.MakeOfModel)
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

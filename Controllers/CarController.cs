@@ -14,7 +14,7 @@ namespace Projekt.Controllers
     [Authorize]
     public class CarController : Controller
     {
-    
+
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly string wwwRootPath;
@@ -93,7 +93,8 @@ namespace Projekt.Controllers
                         await carModel.ImageFile.CopyToAsync(fileStream);
                     }
                 }
-                else {
+                else
+                {
                     carModel.ImageName = "empty.jpg";
                 }
 
@@ -126,66 +127,67 @@ namespace Projekt.Controllers
         // POST: Car/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-       [HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Edit(int id, [Bind("Id,Model,Year,Gearbox,Fuel,Milage,Description,Price,MakeModelId,ImageFile")] CarModel carModel)
-{
-    if (id != carModel.Id)
-    {
-        return NotFound();
-    }
-
-    if (ModelState.IsValid)
-    {
-        try
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Model,Year,Gearbox,Fuel,Milage,Description,Price,MakeModelId,ImageFile")] CarModel carModel)
         {
-            // Hämta befintlig bil från databasen
-            var existingCar = await _context.Cars.FindAsync(id);
-
-            // Uppdatera bara de egenskaper som behöver ändras
-            existingCar.Model = carModel.Model;
-            existingCar.Year = carModel.Year;
-            existingCar.Gearbox = carModel.Gearbox;
-            existingCar.Fuel = carModel.Fuel;
-            existingCar.Milage = carModel.Milage;
-            existingCar.Description = carModel.Description;
-            existingCar.Price = carModel.Price;
-            existingCar.MakeModelId = carModel.MakeModelId;
-
-            // Om en ny bild har valts, uppdatera bildinformationen
-            if (carModel.ImageFile != null)
-            {
-                string fileName = Path.GetFileNameWithoutExtension(carModel.ImageFile.FileName);
-                string extension = Path.GetExtension(carModel.ImageFile.FileName);
-                existingCar.ImageName = fileName.Replace(" ", String.Empty) + DateTime.Now.ToString("yyyymmssfff") + extension;
-
-                string path = Path.Combine(wwwRootPath + "/images", existingCar.ImageName);
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await carModel.ImageFile.CopyToAsync(fileStream);
-                }
-            }
-
-            // Spara ändringarna i databasen
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!CarModelExists(carModel.Id))
+            if (id != carModel.Id)
             {
                 return NotFound();
             }
-            else
+
+            if (ModelState.IsValid)
             {
-                throw;
+                try
+                {
+                    // Hämta befintlig bil från databasen
+                    var existingCar = await _context.Cars.FindAsync(id);
+                    if (existingCar != null)
+                    {
+                        // Uppdatera bara de egenskaper som behöver ändras
+                        existingCar.Model = carModel.Model;
+                        existingCar.Year = carModel.Year;
+                        existingCar.Gearbox = carModel.Gearbox;
+                        existingCar.Fuel = carModel.Fuel;
+                        existingCar.Milage = carModel.Milage;
+                        existingCar.Description = carModel.Description;
+                        existingCar.Price = carModel.Price;
+                        existingCar.MakeModelId = carModel.MakeModelId;
+
+                        // Om en ny bild har valts, uppdatera bildinformationen
+                        if (carModel.ImageFile != null)
+                        {
+                            string fileName = Path.GetFileNameWithoutExtension(carModel.ImageFile.FileName);
+                            string extension = Path.GetExtension(carModel.ImageFile.FileName);
+                            existingCar.ImageName = fileName.Replace(" ", String.Empty) + DateTime.Now.ToString("yyyymmssfff") + extension;
+
+                            string path = Path.Combine(wwwRootPath + "/images", existingCar.ImageName);
+
+                            using (var fileStream = new FileStream(path, FileMode.Create))
+                            {
+                                await carModel.ImageFile.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+                    // Spara ändringarna i databasen
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CarModelExists(carModel.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
+            ViewData["MakeModelId"] = new SelectList(_context.Make, "Id", "Id", carModel.MakeModelId);
+            return View(carModel);
         }
-        return RedirectToAction(nameof(Index));
-    }
-    ViewData["MakeModelId"] = new SelectList(_context.Make, "Id", "Id", carModel.MakeModelId);
-    return View(carModel);
-}
 
 
         // GET: Car/Delete/5
