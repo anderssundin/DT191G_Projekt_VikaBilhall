@@ -11,6 +11,6 @@ public class ApplicationDbContext : IdentityDbContext
     {
     }
 
-    DbSet<CarModel> Cars { get; set; }
-    DbSet<MakeModel> Make { get; set; }
+    public DbSet<CarModel> Cars { get; set; }
+    public DbSet<MakeModel> Make { get; set; }
 }
