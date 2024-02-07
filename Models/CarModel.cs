@@ -15,6 +15,10 @@ namespace Projekt.Models
         [Required]
         [Display(Name = "Modellnamn")]
         public string? Model { get; set; }
+
+           [Display(Name = "År")]
+        public string? Year { get; set; }
+
         [Display(Name = "Växellåda")]
         public string? Gearbox { get; set; }
         [Display(Name = "Drivmedel")]
@@ -25,7 +29,7 @@ namespace Projekt.Models
         public string? Description { get; set; }
         [Display(Name = "Pris")]
         public int? Price { get; set; }
-
+        [Display(Name = "Bild")]
         public string? ImageName { get; set; }
 
         [NotMapped]
@@ -36,6 +40,7 @@ namespace Projekt.Models
         //Foreign key
         [Display(Name = "Tillverkare")]
         public int MakeModelId { get; set; }
+         [Display(Name = "Tillverkare")]
         public MakeModel? MakeModel { get; set; }
 
     }

@@ -15,6 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Model)
             </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Gearbox)
             </th>
@@ -45,6 +48,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Gearbox)
             </td>
@@ -61,10 +67,10 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
+               <img style="width: 200px;" src="images/@Html.DisplayFor(modelItem => item.ImageName)"> 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MakeModel.Id)
+                @Html.DisplayFor(modelItem => item.MakeModel.MakeOfModel)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
