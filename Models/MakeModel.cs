@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Projekt.Models
 {
@@ -15,7 +16,7 @@ namespace Projekt.Models
         [Required]
         [Display(Name = "Tillverkare")]
         public string? MakeOfModel { get; set; }
-
+        [JsonIgnore]
         public List<CarModel>? CarModels { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Projekt.Models
 {
@@ -36,11 +37,13 @@ namespace Projekt.Models
         [Display(Name = "Bild")]
         public IFormFile? ImageFile { get; set; }
 
+        public string? ImageUrl { get; set; }
 
         //Foreign key
         [Display(Name = "Tillverkare")]
         public int MakeModelId { get; set; }
          [Display(Name = "Tillverkare")]
+        
         public MakeModel? MakeModel { get; set; }
 
     }
