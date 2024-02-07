@@ -8,10 +8,10 @@ using Projekt.Data;
 
 #nullable disable
 
-namespace Projekt.Data.Migrations
+namespace Projekt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240207114019_InitialCreate")]
+    [Migration("20240207120554_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -232,9 +232,6 @@ namespace Projekt.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Make")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("MakeModelId")

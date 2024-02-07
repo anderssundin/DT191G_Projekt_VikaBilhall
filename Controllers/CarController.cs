@@ -48,7 +48,7 @@ namespace Projekt.Controllers
         // GET: Car/Create
         public IActionResult Create()
         {
-            ViewData["MakeModelId"] = new SelectList(_context.Make, "Id", "Id");
+            ViewData["MakeModelId"] = new SelectList(_context.Make, "Id", "MakeOfModel");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace Projekt.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Model,Make,Gearbox,Fuel,Milage,Description,Price,ImageName,MakeModelId")] CarModel carModel)
+        public async Task<IActionResult> Create([Bind("Id,Model,Gearbox,Fuel,Milage,Description,Price,ImageName,MakeModelId")] CarModel carModel)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace Projekt.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Model,Make,Gearbox,Fuel,Milage,Description,Price,ImageName,MakeModelId")] CarModel carModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Model,Gearbox,Fuel,Milage,Description,Price,ImageName,MakeModelId")] CarModel carModel)
         {
             if (id != carModel.Id)
             {

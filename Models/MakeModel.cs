@@ -1,16 +1,21 @@
 
-namespace Projekt.Models{
+using System.ComponentModel.DataAnnotations;
 
-    public class MakeModel {
+namespace Projekt.Models
+{
+
+    public class MakeModel
+    {
 
         // Define Make of a car
 
         //Properties
 
         public int Id { get; set; }
-
+        [Required]
+        [Display(Name = "Tillverkare")]
         public string? MakeOfModel { get; set; }
 
-        public List<CarModel>? CarModels {get;set;}
+        public List<CarModel>? CarModels { get; set; }
     }
 }
