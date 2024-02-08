@@ -22,54 +22,60 @@ namespace Projekt
         }
 
         // GET: api/CarApi
-      [HttpGet]
-public async Task<ActionResult<IEnumerable<CarModel>>> GetCars()
-{
-    if (_context.Cars == null)
-    {
-        return NotFound();
-    }
-
-    var cars = await _context.Cars
-        .Include(c => c.MakeModel)
-        .ToListAsync();
-
-    var carsWithMakeOfModel = cars.Select(c => new CarModel
-    {
-        Id = c.Id,
-        Model = c.Model,
-        Year = c.Year,
-        Gearbox = c.Gearbox,
-        Fuel = c.Fuel,
-        Milage = c.Milage,
-        Description = c.Description,
-        Price = c.Price,
-        ImageName = c.ImageName,
-        // Add image url to response
-        ImageUrl = $"{Request.Scheme}://{Request.Host.Value}/images/{c.ImageName}",
-        MakeModelId = c.MakeModelId,
-        MakeModel = new MakeModel
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CarModel>>> GetCars()
         {
-            Id = c.MakeModel?.Id ?? 0,
-            MakeOfModel = c.MakeModel?.MakeOfModel
-        }
-    });
+            if (_context.Cars == null)
+            {
+                return NotFound();
+            }
 
-    return carsWithMakeOfModel.ToList();
-}
+            var cars = await _context.Cars
+                .Include(c => c.MakeModel)
+                .ToListAsync();
+
+            var carsWithMakeOfModel = cars.Select(c => new CarModel
+            {
+                Id = c.Id,
+                Model = c.Model,
+                Year = c.Year,
+                Gearbox = c.Gearbox,
+                Fuel = c.Fuel,
+                Milage = c.Milage,
+                Description = c.Description,
+                Price = c.Price,
+                ImageName = c.ImageName,
+                // Add image url to response
+                ImageUrl = $"{Request.Scheme}://{Request.Host.Value}/images/{c.ImageName}",
+                MakeModelId = c.MakeModelId,
+                MakeModel = new MakeModel
+                {
+                    Id = c.MakeModel?.Id ?? 0,
+                    MakeOfModel = c.MakeModel?.MakeOfModel
+                }
+            });
+
+            return carsWithMakeOfModel.ToList();
+        }
 
 
         // GET: api/CarApi/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CarModel>> GetCarModel(int id)
         {
-            var carModel = await _context.Cars.FindAsync(id);
+            var carModel = await _context.Cars
+            .Include(c => c.MakeModel)
+            .FirstOrDefaultAsync(d => d.Id == id);
+
+
+
 
             if (carModel == null)
             {
                 return NotFound();
             }
-
+            // Add image url to response
+            carModel.ImageUrl = $"{Request.Scheme}://{Request.Host.Value}/images/{carModel.ImageName}";
             return carModel;
         }
 
