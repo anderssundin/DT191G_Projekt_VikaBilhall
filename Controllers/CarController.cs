@@ -34,6 +34,33 @@ namespace Projekt.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+ 
+
+         // SEARCH Carmodel
+
+        // GET: Carmodel
+        public async Task<IActionResult> Search(string? searchParam)
+        {
+            if (searchParam != null)
+            {
+                string searchString = searchParam;
+                IEnumerable<CarModel> result = await _context.Cars
+                 .Where(b => EF.Functions.Like(b.Model, $"%{searchString}%"))
+                 .Include(b => b.MakeModel)
+                .ToListAsync();
+
+
+                return View(result);
+            }
+              var noInputString = _context.Cars.Include(b => b.MakeModel);
+            return View(await noInputString.ToListAsync());
+        }
+
+
+
+
+
+
         // GET: Car/Details/5
         public async Task<IActionResult> Details(int? id)
         {

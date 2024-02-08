@@ -1,12 +1,12 @@
 @model IEnumerable<Projekt.Models.CarModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sök bok";
 }
 
-<h1>Startsidan</h1>
+<h1>Bilsök</h1>
 
-<form method="post" asp-action="Search" class="form-inline">
+<form method="post" class="form-inline">
     <div class="form-group mb-2">
         <label for="searchParam" class="sr-only">Sök modell</label>
         <input type="text" class="form-control" id="searchParam" name="searchParam" placeholder="Sök på modellnamn">
@@ -14,11 +14,8 @@
     <button type="submit" class="btn btn-primary mb-2">Sök</button>
 </form>
 
-<p>
-    <a asp-action="Create">Lägg till ny bil</a>
-</p>
 <table class="table">
-    <thead>
+   <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Model)
@@ -76,7 +73,7 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    <img style="width: 200px;" src="images/@Html.DisplayFor(modelItem => item.ImageName)">
+                    <img style="width: 200px;" src="/images/@Html.DisplayFor(modelItem => item.ImageName)">
                 </td>
                 <td>
                     @if (item.MakeModel != null)
