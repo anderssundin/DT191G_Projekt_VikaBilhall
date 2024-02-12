@@ -255,11 +255,17 @@ namespace Projekt.Controllers
             {
                 if (carModel.ImageName != "empty.jpg")
                 {
-                    string imagePath = wwwRootPath + "/images/";
-                    string fullPath = Path.Combine(imagePath, carModel.ImageName);
-                    if (System.IO.File.Exists(fullPath))
+
+
+                    if (carModel.ImageName != null)
                     {
-                        System.IO.File.Delete(fullPath);
+                        string imagePath = wwwRootPath + "/images/";
+                        string fullPath = Path.Combine(imagePath, carModel.ImageName);
+
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
                     }
 
                 }
