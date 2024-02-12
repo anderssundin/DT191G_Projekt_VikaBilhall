@@ -253,6 +253,16 @@ namespace Projekt.Controllers
             var carModel = await _context.Cars.FindAsync(id);
             if (carModel != null)
             {
+                if (carModel.ImageName != "empty.jpg")
+                {
+                    string imagePath = wwwRootPath + "/images/";
+                    string fullPath = Path.Combine(imagePath, carModel.ImageName);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+
+                }
                 _context.Cars.Remove(carModel);
             }
 
