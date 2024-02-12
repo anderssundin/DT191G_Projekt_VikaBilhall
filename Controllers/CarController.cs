@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Projekt.Data;
 using Projekt.Models;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace Projekt.Controllers
 {
@@ -34,9 +36,9 @@ namespace Projekt.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
- 
 
-         // SEARCH Carmodel
+
+        // SEARCH Carmodel
 
         // GET: Carmodel
         public async Task<IActionResult> Search(string? searchParam)
@@ -52,7 +54,7 @@ namespace Projekt.Controllers
 
                 return View(result);
             }
-              var noInputString = _context.Cars.Include(b => b.MakeModel);
+            var noInputString = _context.Cars.Include(b => b.MakeModel);
             return View(await noInputString.ToListAsync());
         }
 
@@ -119,6 +121,10 @@ namespace Projekt.Controllers
                     {
                         await carModel.ImageFile.CopyToAsync(fileStream);
                     }
+
+                    // Resize image
+
+                    resizeImageFile(fileName);
                 }
                 else
                 {
@@ -194,6 +200,9 @@ namespace Projekt.Controllers
                             {
                                 await carModel.ImageFile.CopyToAsync(fileStream);
                             }
+                            // Resize image
+
+                            resizeImageFile(fileName);
                         }
                     }
                     // Spara ändringarna i databasen
@@ -255,5 +264,29 @@ namespace Projekt.Controllers
         {
             return _context.Cars.Any(e => e.Id == id);
         }
+
+
+        //function for reszing image
+
+        private void resizeImageFile(string fileName)
+        {
+            string imagePath = wwwRootPath + "/images/";
+
+            using (Image image = Image.Load(imagePath + fileName))
+
+            {
+                int targetWidth = 600;
+                int targetHeight = (int)(image.Height * (float)targetWidth / image.Width);
+
+                image.Mutate(x => x.Resize(new ResizeOptions
+                {
+                    Size = new Size(targetWidth, targetHeight),
+                    Mode = ResizeMode.Max
+                }));
+                image.Save(imagePath + fileName);
+            }
+        }
+
+
     }
 }
