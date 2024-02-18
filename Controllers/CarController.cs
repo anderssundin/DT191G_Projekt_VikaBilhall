@@ -18,13 +18,11 @@ namespace Projekt.Controllers
     {
 
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _hostEnvironment;
         private readonly string wwwRootPath;
 
         public CarController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
-            _hostEnvironment = hostEnvironment;
             wwwRootPath = hostEnvironment.WebRootPath;
 
         }
