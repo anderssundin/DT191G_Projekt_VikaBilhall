@@ -11,7 +11,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy  =>
                       {
-                          policy.WithOrigins("https://vikabilhall.netlify.app", "https://vikabilhall.netlify.app/");
+                          policy.WithOrigins("https://vikabilhall.netlify.app", "https://vikabilhall.netlify.app/", "http://localhost:4200/", "http://localhost:4200");
                       });
 });
 

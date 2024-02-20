@@ -33,29 +33,12 @@ namespace Projekt
             var cars = await _context.Cars
                 .Include(c => c.MakeModel)
                 .ToListAsync();
-
-            var carsWithMakeOfModel = cars.Select(c => new CarModel
+            foreach (var car in cars)
             {
-                Id = c.Id,
-                Model = c.Model,
-                Year = c.Year,
-                Gearbox = c.Gearbox,
-                Fuel = c.Fuel,
-                Milage = c.Milage,
-                Description = c.Description,
-                Price = c.Price,
-                ImageName = c.ImageName,
-                // Add image url to response
-                ImageUrl = $"{Request.Scheme}://{Request.Host.Value}/images/{c.ImageName}",
-                MakeModelId = c.MakeModelId,
-                MakeModel = new MakeModel
-                {
-                    Id = c.MakeModel?.Id ?? 0,
-                    MakeOfModel = c.MakeModel?.MakeOfModel
-                }
-            });
-
-            return carsWithMakeOfModel.ToList();
+                car.ImageUrl = $"{Request.Scheme}://{Request.Host.Value}/images/{car.ImageName}";
+            }
+           
+            return cars;
         }
 
 
@@ -67,9 +50,6 @@ namespace Projekt
             .Include(c => c.MakeModel)
             .FirstOrDefaultAsync(d => d.Id == id);
 
-
-
-
             if (carModel == null)
             {
                 return NotFound();
@@ -79,6 +59,6 @@ namespace Projekt
             return carModel;
         }
 
-        
+
     }
 }
